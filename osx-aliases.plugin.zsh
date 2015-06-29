@@ -2,24 +2,30 @@
 
 if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
   # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-  function update() {
+  installed() {
+    if [[ command -v "${1}" >/dev/null 2>&1 ]]; then
+      echo "\033[0;34m${1}...\033[0m"
+      return true
+    else 
+      return false
+    fi
+  }
+  update() {
+    echo "\033[0;34mUpdating...\033[0m"
+    
+    if [[ "$1" == "-osx" ]]; then
+      # Keep-alive: update existing `sudo` time stamp until `update` has finished
+      sudo -v && while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+      echo "\033[0;34mOSX Packages...\033[0m"
+      sudo softwareupdate -i -a
+    fi
   
-      if [[ "$1" == "-osx" ]]; then
-        # Keep-alive: update existing `sudo` time stamp until `update` has finished
-        sudo -v && while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-        echo "\033[0;34mUpdating OSX Packages...\033[0m"
-        sudo softwareupdate -i -a
-      fi
-  
-      echo "\033[0;34mUpdating Homebrew...\033[0m"
-      brew update; brew upgrade --all; brew cleanup; brew cask cleanup;
-      echo "\033[0;34mUpdating npm...\033[0m"
-      npm install npm -g; npm update -g;
-      echo "\033[0;34mUpdating gem...\033[0m"
-      sudo gem update --system; sudo gem update
-      echo "\033[0;34mUpdating pip...\033[0m"
-      pip install --upgrade pip
-      pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U # upgrade outdated pip packages...
+    installed "brew" && brew update; brew upgrade --all; brew cleanup; brew cask cleanup;
+    installed "npm" && npm install npm -g; npm update -g;
+    echo "\033[0;34mUpdating gem...\033[0m"
+    installed "gem" && sudo gem update --system; sudo gem update
+    installed "pip" && pip install --upgrade pip \
+      && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U # upgrade outdated pip packages...
   }
   
   # IP addresses
