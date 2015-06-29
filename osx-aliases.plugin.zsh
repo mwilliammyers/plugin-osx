@@ -18,13 +18,13 @@ if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
   
   error () {
     # shellcheck disable=SC2059
-    printf "\r\033[2K  [\033[0;31mERROR\033[0m] $1\n"
+    printf "\r\033[2K  [ \033[0;31mERROR\033[0m ] $1\n"
     echo ''
   }
 
   # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
   installed() {
-    command -v "${1}" >/dev/null 2>&1 && info "${1}" || (error "${1} not installed"; return false)
+    command -v "${1}" >/dev/null 2>&1 && info "${1}" || return false
   }
   
   update() {
