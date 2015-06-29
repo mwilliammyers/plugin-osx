@@ -3,7 +3,7 @@
 if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
   info () {
     # shellcheck disable=SC2059
-    printf "  [ \033[00;34m..\033[0m ] $1"
+    printf "  [ \033[00;34m...\033[0m ] $1\n"
   }
   
   user () {
@@ -24,23 +24,21 @@ if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
 
   # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
   installed() {
-    command -v "${1}" >/dev/null 2>&1 && info "${1}" || return false
+    command -v "${1}" >/dev/null 2>&1 && info "${1}" || (error "${1} not installed"; return false)
   }
   
   update() {
-    info "Updating "
-    
     if [[ "$1" == "-osx" ]]; then
       # Keep-alive: update existing `sudo` time stamp until `update` has finished
       sudo -v && while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
       info "OS X Packages" && sudo softwareupdate -i -a || error "Updating OS X packages"
     fi
     
-    installed "brew" && (brew update; brew upgrade --all; brew cleanup; brew cask cleanup;) && success || error "Updating Homebrew"
-    installed "npm" && (npm install npm -g; npm update -g;) && success || error "Updating npm"
-    installed "gem" && (sudo gem update --system; sudo gem update) && success || error "Updating gem"
+    installed "brew" && (brew update; brew upgrade --all; brew cleanup; brew cask cleanup;) && success "Updated brew" || error "Updating brew"
+    installed "npm" && (npm install npm -g; npm update -g;) && success "Updated npm" || error "Updating npm"
+    installed "gem" && (sudo gem update --system; sudo gem update) && success "Updated gem" || error "Updating gem"
     # upgrade outdated pip packages...
-    installed "pip" && (pip install --upgrade pip && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U) && success || error "Updating pip"
+    installed "pip" && (pip install --upgrade pip && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U) && success "Updated npm" || error "Updating pip"
     installed "askdjfasdfklg" || error "not installed"
   }
   
