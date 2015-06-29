@@ -7,17 +7,17 @@ if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
       if [[ "$1" == "-osx" ]]; then
         # Keep-alive: update existing `sudo` time stamp until `update` has finished
         sudo -v && while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-        echo "\033[0;34mUpgrading OSX Packages...\033[0m"
+        echo "\033[0;34mUpdating OSX Packages...\033[0m"
         sudo softwareupdate -i -a
       fi
   
-      echo "\033[0;34mUpgrading Homebrew...\033[0m"
-      brew update; brew upgrade -all; brew cleanup; brew cask cleanup;
-      echo "\033[0;34mUpgrading npm...\033[0m"
+      echo "\033[0;34mUpdating Homebrew...\033[0m"
+      brew update; brew upgrade --all; brew cleanup; brew cask cleanup;
+      echo "\033[0;34mUpdating npm...\033[0m"
       npm install npm -g; npm update -g;
-      echo "\033[0;34mUpgrading gem...\033[0m"
+      echo "\033[0;34mUpdating gem...\033[0m"
       sudo gem update --system; sudo gem update
-      echo "\033[0;34mUpgrading pip...\033[0m"
+      echo "\033[0;34mUpdating pip...\033[0m"
       pip install --upgrade pip
       pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U # upgrade outdated pip packages...
   }
