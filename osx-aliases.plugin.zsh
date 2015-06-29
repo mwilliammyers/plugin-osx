@@ -3,13 +3,9 @@
 if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
   # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
   installed() {
-    if [[ command -v "${1}" >/dev/null 2>&1 ]]; then
-      echo "\033[0;34m${1}...\033[0m"
-      return true
-    else 
-      return false
-    fi
+    command -v "${1}" >/dev/null 2>&1 && echo "\033[0;34m${1}...\033[0m" || return false
   }
+  
   update() {
     echo "\033[0;34mUpdating...\033[0m"
     
