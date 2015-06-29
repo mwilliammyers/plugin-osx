@@ -24,8 +24,7 @@ if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
     installed "npm" && npm install npm -g; npm update -g;
     echo "\033[0;34mUpdating gem...\033[0m"
     installed "gem" && sudo gem update --system; sudo gem update
-    installed "pip" && pip install --upgrade pip \
-      && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U # upgrade outdated pip packages...
+    installed "pip" && pip install --upgrade pip && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U # upgrade outdated pip packages...
   }
   
   # IP addresses
