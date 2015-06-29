@@ -1,26 +1,47 @@
 #!/usr/bin/env zsh
 
 if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
+  info () {
+    # shellcheck disable=SC2059
+    printf "  [ \033[00;34m..\033[0m ] $1"
+  }
+  
+  user () {
+    # shellcheck disable=SC2059
+    printf "\r  [ \033[0;33m?\033[0m ] $1 "
+  }
+  
+  success () {
+    # shellcheck disable=SC2059
+    printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+  }
+  
+  error () {
+    # shellcheck disable=SC2059
+    printf "\r\033[2K  [\033[0;31mERROR\033[0m] $1\n"
+    echo ''
+  }
+
   # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
   installed() {
-    command -v "${1}" >/dev/null 2>&1 && echo "\033[0;34m${1}...\033[0m" || return false
+    command -v "${1}" >/dev/null 2>&1 && info "${1}" || return false
   }
   
   update() {
-    echo "\033[0;34mUpdating...\033[0m"
+    info "Updating "
     
     if [[ "$1" == "-osx" ]]; then
       # Keep-alive: update existing `sudo` time stamp until `update` has finished
       sudo -v && while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-      echo "\033[0;34mOSX Packages...\033[0m"
-      sudo softwareupdate -i -a
+      info "OS X Packages" && sudo softwareupdate -i -a || error "Updating OS X packages"
     fi
-  
-    installed "brew" && brew update; brew upgrade --all; brew cleanup; brew cask cleanup;
-    installed "npm" && npm install npm -g; npm update -g;
-    echo "\033[0;34mUpdating gem...\033[0m"
-    installed "gem" && sudo gem update --system; sudo gem update
-    installed "pip" && pip install --upgrade pip && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U # upgrade outdated pip packages...
+    
+    installed "brew" && (brew update; brew upgrade --all; brew cleanup; brew cask cleanup;) && success || error "Updating Homebrew"
+    installed "npm" && (npm install npm -g; npm update -g;) && success || error "Updating npm"
+    installed "gem" && (sudo gem update --system; sudo gem update) && success || error "Updating gem"
+    # upgrade outdated pip packages...
+    installed "pip" && (pip install --upgrade pip && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U) && success || error "Updating pip"
+    installed "askdjfasdfklg" || error "not installed"
   }
   
   # IP addresses
