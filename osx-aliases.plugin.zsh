@@ -38,8 +38,7 @@ if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
     installed "npm" && (npm install npm -g; npm update -g;) && success "Updated npm" || error "Updating npm"
     installed "gem" && (sudo gem update --system; sudo gem update) && success "Updated gem" || error "Updating gem"
     # upgrade outdated pip packages...
-    installed "pip" && (pip install --upgrade pip && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U) && success "Updated npm" || error "Updating pip"
-    installed "askdjfasdfklg" || error "not installed"
+    installed "pip" && (pip install --upgrade pip && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U) && success "Updated pip" || error "Updating pip"
   }
   
   # IP addresses
