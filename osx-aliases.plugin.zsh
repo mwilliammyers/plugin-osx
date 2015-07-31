@@ -39,7 +39,7 @@ if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
     installed "gem" && (sudo gem update --system; sudo gem update) && success "Updated gem" || error "Updating gem"
     # upgrade outdated pip packages...
     installed "pip" && (pip install --upgrade pip && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U) && success "Updated pip" || error "Updating pip"
-    installed "pip3" && (pip3 install --upgrade pip3 && pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3 install -U) && success "Updated pip3" || error "Updating pip3"
+    installed "pip3" && (pip3 install --upgrade pip && pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip3 install -U) && success "Updated pip3" || error "Updating pip3"
   }
   
   # IP addresses
