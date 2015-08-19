@@ -27,6 +27,7 @@ if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
     command -v "${1}" >/dev/null 2>&1 && info "${1}" || return false
   }
   
+  # TODO: verify the error output works correctly...
   update() {
     if [[ "$1" == "-osx" ]]; then
       # Keep-alive: update existing `sudo` time stamp until `update` has finished
