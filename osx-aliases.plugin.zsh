@@ -3,7 +3,7 @@
 if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
   info () {
     # shellcheck disable=SC2059
-    printf "  [ \033[00;34m...\033[0m ] $1\n"
+    printf "[ \033[00;34m...\033[0m ] $1\n"
   }
   
   user () {
