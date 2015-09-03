@@ -120,4 +120,17 @@ if [[ "$OSTYPE" =~ ^(darwin)+ ]]; then
   # turn ethernet on/off
   alias ethoff="sudo networksetup setnetworkserviceenabled 'Ethernet 1' off"
   alias ethon="sudo networksetup setnetworkserviceenabled 'Ethernet 1' on"
+  
+  trash() {
+    if [[ "$1" =~ ^[-]?[aA]{1}(ll)*$ ]]; then
+        sudo rm -rvf ~/Library/Logs/*
+        sudo rm -rvf /Library/Logs/*
+        sudo rm -rvf /var/log/*
+        sudo rm -rfv /Volumes/*/.Trashes
+    elif [[ "$1" =~ ^[-]?[uU]{1}(ser)*$ ]]; then
+        rm -rvf ~/Library/Logs/*
+    fi
+    rm -rfv ~/.Trash/*
+    rm -rfv ~/.Trash/.*
+  }
 fi
