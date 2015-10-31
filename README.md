@@ -18,4 +18,4 @@ $ ql img.png
 [brigand/fish-functions](https://github.com/brigand/fish-functions)
 
 [zsh]: http://zsh.sourceforge.net
-[fish]: http://fishshell.com/ & zsh
+[fish]: http://fishshell.com/
