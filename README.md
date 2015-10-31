@@ -1,7 +1,21 @@
-# zsh-osx
-ZSH plugin to add some common OS X related aliases and functions.
+# dotstrap-osx
+Collection of OS X related functions for use with [fish] & [zsh]
 
-## use
-For use with most ZSH plugin managers...
+## install
+`ds install dotstrap-osx` see: [dotstrap](https://github.com/mkwmms/dotstrap/blob/master/README.md)
 
-My favorite is [antibody](https://github.com/caarlos0/antibody). To use with [antibody](https://github.com/caarlos0/antibody): add `antibody bundle mkwmms/zsh-osx` to your .zshrc
+## functions
+
+#### ql ([fish] only at the moment)
+
+OSX's quick look on the command line. Just opens a preview for whatever, escape closes it.
+
+```
+$ ql img.png
+```
+
+## acknowledgements
+[brigand/fish-functions](https://github.com/brigand/fish-functions)
+
+[zsh]: http://zsh.sourceforge.net
+[fish]: http://fishshell.com/ & zsh
