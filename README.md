@@ -2,7 +2,7 @@
 Collection of OS X related functions for use with [fish] & [zsh]
 
 ## install
-`ds install mkwmms/dotstrap-osx` see: [dotstrap](https://github.com/mkwmms/dotstrap/blob/master/README.md)
+`ds install mkwmms/dotstrap-osx` see: [dotstrap]
 
 ## functions
 
@@ -19,3 +19,4 @@ $ ql img.png
 
 [zsh]: http://zsh.sourceforge.net
 [fish]: http://fishshell.com/
+[dotstrap]: https://github.com/mkwmms/dotstrap
