@@ -1,8 +1,15 @@
-# dotstrap-osx
+plugin-osx
+==========
+
 Collection of OS X related functions for use with [fish] & [zsh]
 
 ## install
-`ds install mkwmms/dotstrap-osx` see: [dotstrap]
+
+```
+dotstrap install mkwmms/plugin-osx
+```
+
+see: [dotstrap]
 
 ## functions
 
